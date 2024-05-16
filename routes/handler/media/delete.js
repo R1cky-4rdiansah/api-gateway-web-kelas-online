@@ -1,11 +1,12 @@
-const apiAdapter = require("../../apiAdapter");
+const apiAdapater = require("../../apiAdapter");
 const { URL_SERVICE_MEDIA } = process.env;
 
-const Api = apiAdapter(URL_SERVICE_MEDIA);
+const Api = apiAdapater(URL_SERVICE_MEDIA);
 
 module.exports = async (req, res) => {
   try {
-    const data = await Api.get("/media");
+    const id = req.params.id;
+    const data = await Api.delete(`/media/${id}`);
     return res.json(data.data);
   } catch (error) {
     if ((error.code = "ECONNREFUSED")) {
