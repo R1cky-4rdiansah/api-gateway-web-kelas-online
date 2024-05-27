@@ -11,6 +11,10 @@ const courseRouter = require("./routes/courses");
 const mediaRouter = require("./routes/medias");
 const paymentRouter = require("./routes/payments");
 const orderRouter = require("./routes/orders");
+const refreshTokenRouter = require("./routes/refreshTokens");
+
+//middleware
+const middlewareToken = require("./middleware/verifyToken");
 
 const app = express();
 
@@ -28,8 +32,9 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/media", mediaRouter);
 app.use("/order", orderRouter);
-app.use("/course", courseRouter);
+app.use("/course", middlewareToken, courseRouter);
 app.use("/payment", paymentRouter);
+app.use("/refresh-tokens", refreshTokenRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

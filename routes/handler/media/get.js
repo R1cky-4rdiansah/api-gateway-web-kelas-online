@@ -8,11 +8,14 @@ module.exports = async (req, res) => {
     const data = await Api.get("/media");
     return res.json(data.data);
   } catch (error) {
-    if ((error.code = "ECONNREFUSED")) {
+    if ((error.code == "ECONNREFUSED")) {
       return res
         .status(500)
         .json({ status: "error", message: "Server tidak tersedia" });
     }
-    return res.status(404).json(error.response);
+
+    const { status, data } = error.response;
+
+    return res.status(status).json(data);
   }
 };
