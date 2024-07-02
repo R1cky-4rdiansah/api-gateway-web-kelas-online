@@ -34,7 +34,6 @@ module.exports = async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error.code);
     if (error.code === "ECONNREFUSED") {
       return res
         .status(500)

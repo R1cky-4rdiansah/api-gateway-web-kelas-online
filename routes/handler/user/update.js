@@ -9,7 +9,6 @@ module.exports = async (req, res) => {
     const users = await Api.put(`/users/${id}`, req.body);
     return res.json(users.data);
   } catch (error) {
-    console.log(error.code);
     if (error.code === "ECONNREFUSED") {
       return res
         .status(500)
