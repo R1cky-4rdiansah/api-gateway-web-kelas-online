@@ -1,12 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const handleCourse = require("./handler/courses");
+const middlewareToken = require("../middleware/verifyToken");
 
 /* GET course listing. */
-router.get("/:id", handleCourse.get);
-router.put("/:id", handleCourse.update);
-router.post("/", handleCourse.create);
 router.get("/", handleCourse.getAll);
-router.delete("/:id", handleCourse.destroy);
+router.get("/:id", handleCourse.get);
+
+router.put("/:id", middlewareToken, handleCourse.update);
+router.post("/", middlewareToken, handleCourse.create);
+router.delete("/:id", middlewareToken, handleCourse.destroy);
 
 module.exports = router;
