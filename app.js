@@ -19,6 +19,7 @@ const lessonRoutes = require("./routes/lessons");
 const imageCourseRoutes = require("./routes/imageCourses");
 const myCourseRoutes = require("./routes/myCourse");
 const reviewRoutes = require("./routes/reviews");
+const webhookRoutes = require("./routes/webhook");
 
 //middleware
 const middlewareToken = require("./middleware/verifyToken");
@@ -38,7 +39,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/media", mediaRouter);
-app.use("/order", orderRouter);
+app.use("/orders", middlewareToken, orderRouter);
 app.use("/payment", paymentRouter);
 app.use("/refresh-tokens", refreshTokenRouter);
 app.use("/mentors", middlewareToken, mentorRoutes);
@@ -48,6 +49,7 @@ app.use("/lessons", middlewareToken, lessonRoutes);
 app.use("/image-courses", middlewareToken, imageCourseRoutes);
 app.use("/my-courses", middlewareToken, myCourseRoutes);
 app.use("/reviews", middlewareToken, reviewRoutes);
+app.use("/webhooks", webhookRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

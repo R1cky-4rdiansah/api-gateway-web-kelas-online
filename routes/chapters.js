@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const handleChapters = require("./handler/chapters");
 
-/* GET chapter listing. */
+/* route chapter listing. */
 router.get("/", handleChapters.getAll);
 router.get("/:id", handleChapters.get);
 router.put("/:id", handleChapters.update);

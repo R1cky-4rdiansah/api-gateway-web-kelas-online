@@ -3,7 +3,7 @@ const router = express.Router();
 const handleCourse = require("./handler/courses");
 const middlewareToken = require("../middleware/verifyToken");
 
-/* GET course listing. */
+/* route course listing. */
 router.get("/", handleCourse.getAll);
 router.get("/:id", handleCourse.get);
 

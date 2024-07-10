@@ -3,7 +3,7 @@ const router = express.Router();
 const handleUsers = require("./handler/user");
 const middlewareToken = require("../middleware/verifyToken");
 
-/* GET users listing. */
+/* route users listing. */
 router.post("/register", handleUsers.register);
 router.post("/login", handleUsers.login);
 router.put("/", middlewareToken, handleUsers.update);

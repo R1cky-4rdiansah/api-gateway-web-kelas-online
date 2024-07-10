@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const handleLessons = require("./handler/lessons");
 
-/* GET lesson listing. */
+/* route lesson listing. */
 router.get("/", handleLessons.getAll);
 router.get("/:id", handleLessons.get);
 router.put("/:id", handleLessons.update);
