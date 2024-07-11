@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
       params: { refresh_token: refreshToken },
     });
 
-    jwt.verify(refreshToken, JWT_SECRET_REFRESH_TOKEN, (err, decoded) => {
+    jwt.verify(refreshToken, JWT_SECRET_REFRESH_TOKEN, async (err, decoded) => {
       if (err) {
         return res.status(403).json(err.message);
       }
@@ -36,7 +36,9 @@ module.exports = async (req, res) => {
         });
       }
 
-      const token = jwt.sign({ data: decoded.data }, JWT_SECRET_TOKEN, {
+      const newToken = await Api.get(`/users/${decoded.data.id}`);
+
+      const token = jwt.sign({ data: newToken.data.data }, JWT_SECRET_TOKEN, {
         expiresIn: JWT_ACCESS_TOKEN_EXPIRED,
       });
 

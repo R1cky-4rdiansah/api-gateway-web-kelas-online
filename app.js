@@ -18,6 +18,7 @@ const imageCourseRoutes = require("./routes/imageCourses");
 const myCourseRoutes = require("./routes/myCourse");
 const reviewRoutes = require("./routes/reviews");
 const webhookRoutes = require("./routes/webhook");
+const roles = require("./middleware/permission");
 
 //middleware
 const middlewareToken = require("./middleware/verifyToken");
@@ -36,16 +37,16 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use("/media", mediaRouter);
-app.use("/orders", middlewareToken, orderRouter);
+app.use("/media", middlewareToken, roles("student", "admin"), mediaRouter);
+app.use("/orders", middlewareToken, roles("student", "admin"), orderRouter);
 app.use("/refresh-tokens", refreshTokenRouter);
-app.use("/mentors", middlewareToken, mentorRoutes);
+app.use("/mentors", middlewareToken, roles("admin"), mentorRoutes);
 app.use("/courses", courseRouter);
-app.use("/chapters", middlewareToken, chapterRoutes);
-app.use("/lessons", middlewareToken, lessonRoutes);
-app.use("/image-courses", middlewareToken, imageCourseRoutes);
-app.use("/my-courses", middlewareToken, myCourseRoutes);
-app.use("/reviews", middlewareToken, reviewRoutes);
+app.use("/chapters", middlewareToken, roles("admin"), chapterRoutes);
+app.use("/lessons", middlewareToken, roles("admin"), lessonRoutes);
+app.use("/image-courses", middlewareToken, roles("admin"), imageCourseRoutes);
+app.use("/my-courses", middlewareToken, roles("student", "admin"), myCourseRoutes);
+app.use("/reviews", middlewareToken, roles("student", "admin"), reviewRoutes);
 app.use("/webhooks", webhookRoutes);
 
 // catch 404 and forward to error handler
