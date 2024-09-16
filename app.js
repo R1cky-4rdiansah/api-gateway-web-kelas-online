@@ -18,6 +18,7 @@ const imageCourseRoutes = require("./routes/imageCourses");
 const myCourseRoutes = require("./routes/myCourse");
 const reviewRoutes = require("./routes/reviews");
 const webhookRoutes = require("./routes/webhook");
+const watchRoutes = require("./routes/watch");
 const roles = require("./middleware/permission");
 
 //middleware
@@ -45,8 +46,14 @@ app.use("/courses", courseRouter);
 app.use("/chapters", middlewareToken, roles("admin"), chapterRoutes);
 app.use("/lessons", middlewareToken, roles("admin"), lessonRoutes);
 app.use("/image-courses", middlewareToken, roles("admin"), imageCourseRoutes);
-app.use("/my-courses", middlewareToken, roles("student", "admin"), myCourseRoutes);
+app.use(
+  "/my-courses",
+  middlewareToken,
+  roles("student", "admin"),
+  myCourseRoutes
+);
 app.use("/reviews", middlewareToken, roles("student", "admin"), reviewRoutes);
+app.use("/watch", middlewareToken, roles("student", "admin"), watchRoutes);
 app.use("/webhooks", webhookRoutes);
 
 // catch 404 and forward to error handler

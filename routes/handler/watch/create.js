@@ -5,13 +5,12 @@ const Api = apiAdapter(URL_SERVICE_COURSE);
 
 module.exports = async (req, res) => {
   try {
-    const lesson = await Api.get("/api/lessons", {
-      params: {
-        ...req.query,
-      },
+    user_id = req.user.data.id;
+    const course = await Api.post("/api/watch", {
+      user_id,
+      lesson_id: req.body.lesson_id,
     });
-
-    return res.json(lesson.data);
+    return res.json(course.data);
   } catch (error) {
     if (error.code === "ECONNREFUSED") {
       return res
@@ -21,6 +20,6 @@ module.exports = async (req, res) => {
 
     const { status, data } = error.response;
 
-    return res.status(status).json(error);
+    return res.status(status).json(data);
   }
 };
